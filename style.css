@@ -124,3 +124,6 @@ svg{position:absolute}
   z-index:5;animation:blink 2s infinite;
 }
 @keyframes blink{50%{opacity:.3}}
+/* ===== Mode halaman (tanpa scroll bawaan) ===== */
+html,body{height:100%;overflow:hidden;touch-action:none;overscroll-behavior:none}
+#track{display:none}
