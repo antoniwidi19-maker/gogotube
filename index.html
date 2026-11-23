@@ -21,18 +21,31 @@
   <div class="txt">
    <small>A new address in the sky</small>
    <h2>Vela<br>Armonia</h2>
+   <p>Selamat datang di Vela Armonia, kawasan hunian premium yang berdiri di atas awan. Scroll ke bawah untuk menjelajahi menara, residensi, galeri jam tangan, marina yacht, hingga penerbangan pribadi.</p>
   </div>
  </section>
 
- <!-- Scene 1: Menara -->
+ <!-- Scene 1: Menara + burung -->
  <section class="scene s1">
   <div class="bg">
    <div class="sil" style="height:55%;clip-path:polygon(0 100%,0 70%,8% 70%,8% 55%,16% 55%,16% 75%,24% 75%,24% 40%,30% 40%,30% 18%,34% 8%,38% 18%,38% 40%,46% 40%,46% 62%,56% 62%,56% 50%,64% 50%,64% 72%,74% 72%,74% 58%,84% 58%,84% 78%,100% 78%,100% 100%)"></div>
   </div>
+
+  <!-- Burung terbang -->
+  <div class="birds">
+   <div class="bird" data-x="-12" data-y="14" data-s="60"><svg viewBox="0 0 40 20"><path d="M2 14Q11 0 20 12Q29 0 38 14"/></svg></div>
+   <div class="bird" data-x="-22" data-y="22" data-s="70"><svg viewBox="0 0 40 20"><path d="M2 14Q11 0 20 12Q29 0 38 14"/></svg></div>
+   <div class="bird" data-x="-5"  data-y="30" data-s="55"><svg viewBox="0 0 40 20"><path d="M2 14Q11 0 20 12Q29 0 38 14"/></svg></div>
+   <div class="bird" data-x="-30" data-y="10" data-s="75"><svg viewBox="0 0 40 20"><path d="M2 14Q11 0 20 12Q29 0 38 14"/></svg></div>
+   <div class="bird" data-x="-16" data-y="36" data-s="65"><svg viewBox="0 0 40 20"><path d="M2 14Q11 0 20 12Q29 0 38 14"/></svg></div>
+   <div class="bird" data-x="-40" data-y="18" data-s="80"><svg viewBox="0 0 40 20"><path d="M2 14Q11 0 20 12Q29 0 38 14"/></svg></div>
+  </div>
+
   <div class="txt">
    <small>01 — The Tower</small>
    <h2>Vela<br>Armonia</h2>
-   <p>Hunian ikonik setinggi 62 lantai di tepi laut.</p>
+   <p>Menara setinggi 62 lantai dengan fasad kaca bertingkat yang menghadap langsung ke laut. Dirancang oleh arsitek internasional dengan konsep hunian berkelanjutan, taman langit, dan lobi bergaya hotel bintang lima.</p>
+   <ul class="meta"><li>62 Lantai</li><li>340 Unit</li><li>Taman Langit</li></ul>
   </div>
  </section>
 
@@ -44,7 +57,8 @@
   <div class="txt">
    <small>02</small>
    <h2>Residences</h2>
-   <p>Jendela setinggi langit-langit, cahaya senja sepanjang hari.</p>
+   <p>Pilihan residensi 2 sampai 5 kamar tidur dengan jendela setinggi langit-langit, dapur kelas chef, dan balkon privat. Cahaya senja masuk sepanjang hari, dan seluruh unit sudah dilengkapi sistem smart home.</p>
+   <ul class="meta"><li>120 – 480 m²</li><li>Smart Home</li><li>Kolam Infinity</li></ul>
   </div>
  </section>
 
@@ -60,14 +74,15 @@
   <div class="txt">
    <small>03</small>
    <h2>Horology</h2>
-   <p>Mahakarya waktu dari manufaktur terbaik dunia.</p>
+   <p>Galeri khusus untuk para kolektor jam tangan. Nikmati pameran rutin dari manufaktur terbaik dunia, ruang servis oleh ahli horologi bersertifikat, serta brankas pribadi untuk menyimpan koleksi berharga Anda.</p>
+   <ul class="meta"><li>Galeri Kolektor</li><li>Layanan Servis</li><li>Brankas Pribadi</li></ul>
   </div>
  </section>
 
- <!-- Scene 4: Yachts -->
+ <!-- Scene 4: Yachts (perahu berlayar ke kanan) -->
  <section class="scene s4">
   <div class="bg">
-   <svg viewBox="0 0 200 100" style="width:44vw;left:28%;top:36%" fill="#0d1626">
+   <svg id="boat" viewBox="0 0 200 100" style="width:44vw;left:28%;top:36%" fill="#0d1626">
     <path d="M10 70h180l-25 15H35z"/>
     <path d="M100 68V10l45 52zM92 68V22L55 68z" fill="#f4efe6"/>
    </svg>
@@ -75,11 +90,12 @@
   <div class="txt">
    <small>04</small>
    <h2>Yachts</h2>
-   <p>Dermaga pribadi untuk armada kelas dunia.</p>
+   <p>Marina pribadi dengan 80 tempat sandar untuk yacht hingga 60 meter. Tersedia layanan valet marina, bahan bakar, dan perawatan kapal, ditambah klub pantai eksklusif khusus penghuni.</p>
+   <ul class="meta"><li>80 Slip Sandar</li><li>Valet Marina</li><li>Klub Pantai</li></ul>
   </div>
  </section>
 
- <!-- Scene 5: Aviation -->
+ <!-- Scene 5: Aviation (pesawat terbang ke kanan lalu hilang) -->
  <section class="scene s5">
   <div class="bg">
    <div class="sil" style="height:42%;background:#2a2a30;clip-path:polygon(44% 0,56% 0,100% 100%,0 100%)"></div>
@@ -90,7 +106,8 @@
   <div class="txt">
    <small>05</small>
    <h2>Aviation</h2>
-   <p>Akses langsung ke hanggar jet pribadi.</p>
+   <p>Helipad di puncak menara dan akses langsung ke hanggar jet pribadi, hanya sekitar 15 menit dari bandara. Dari pintu rumah sampai kabin pesawat, semuanya diatur oleh tim concierge kami.</p>
+   <ul class="meta"><li>Helipad</li><li>Hanggar Jet</li><li>15 Menit ke Bandara</li></ul>
   </div>
  </section>
 
