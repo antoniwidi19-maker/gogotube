@@ -1,23 +1,4 @@
-[12.55, 23/11/2026] brndnsn: (function () {
-  var scenes = [].slice.call(document.querySelectorAll('.scene'));
-  var N      = scenes.length;
-  var bar    = document.querySelector('#bar i');
-  var gear   = document.getElementById('gear');
-  var plane  = document.getElementById('plane');
-  var boat   = document.getElementById('boat');
-  var birds  = [].slice.call(document.querySelectorAll('.bird'));
-  var hint   = document.querySelector('.hint');
-
-  function ease(t)  { return t * t * (3 - 2 * t); }
-  function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
-
-  function tick() {
-    var max = document.documentElement.scrollHeight - innerHeight;
-    var p   = max > 0 ? clamp(scrollY / max, 0, 1) : 0;   // 0..1
-    var x   = p * (N - 1);                                // posisi scene
-
-…
-[13.16, 23/11/2026] brndnsn: (function () {
+function () {
   var scenes = [].slice.call(document.querySelectorAll('.scene')).map(function (el) {
     return { el: el, bg: el.querySelector('.bg'), txt: el.querySelector('.txt') };
   });
@@ -36,19 +17,18 @@
   var cur = 0;                    // posisi 0..1
   var moving = false, locked = false, running = false;
   var arrAt = [];                 // waktu halaman i mulai tampil
-  var lastGo = 0;
+  var lastGo = 0, lastWheel = 0;
 
   function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
-  function ease(t)  { return t * t * (3 - 2 * t); }
-  function easeIO(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; }
+  function ease(t)   { return t * t * (3 - 2 * t); }
+  function easeIO(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 
-  /* progres animasi "saat tiba" di sebuah halaman */
+  /* progres animasi "saat tiba" di sebuah halaman (0..1) */
   function arr(i, delay, dur, now) {
     if (arrAt[i] == null) return 0;
     return clamp((now - arrAt[i] - delay) / dur, 0, 1);
   }
 
-  /* pindah halaman */
   function go(dir) {
     var n = clamp(idx + dir, 0, N - 1);
     if (n === idx || locked) return;
@@ -73,7 +53,7 @@
       if (k >= 1) { cur = to; moving = false; }
     }
     render(cur, now);
-    if (moving || now - lastGo < 8000) requestAnimationFrame(loop);
+    if (moving || idx === 1 || idx === 4 || now - lastGo < 8000) requestAnimationFrame(loop);
     else running = false;
   }
 
@@ -87,27 +67,30 @@
       var o = (d < -1 || d > 1) ? 0 : 1 - Math.abs(d);
       var on = o > 0;
       s.el.classList.toggle('on', on);
+      s.el.style.opacity = on ? ease(Math.min(1, o * 1.6)).toFixed(3) : 0;
       if (!on) continue;
-      s.el.style.opacity = ease(Math.min(1, o * 1.6)).toFixed(3);
       var z = 1 + (d + 1) * 0.18;
       s.bg.style.transform  = 'translate3d(0,' + (-d * 3).toFixed(2) + '%,0) scale(' + z.toFixed(3) + ')';
       s.txt.style.transform = 'translate3d(0,' + (d * 60).toFixed(1) + 'px,0)';
     }
 
-    /* Halaman 1: burung terbang ke kanan */
-    var tb = arr(1, 300, 6000, now);
-    birds.forEach(function (b) {
-      var bx = b.x + tb * b.s * 2.2;
-      var by = b.y + Math.sin(now / 500 + b.x) * 2;
-      b.el.style.transform = 'translate3d(' + bx.toFixed(2) + 'vw,' + by.toFixed(2) + 'vh,0)';
-    });
+    /* Halaman 1: burung terbang ke kanan (berulang) */
+    if (arrAt[1] != null) {
+      var tb = Math.max(0, (now - arrAt[1] - 300) / 7000);
+      birds.forEach(function (b) {
+        var ph = (tb * (b.s / 60) + (-b.x) / 70) % 1;
+        var bx = ph * 125 - 15;
+        var by = b.y + Math.sin(now / 500 + b.x) * 2;
+        b.el.style.transform = 'translate3d(' + bx.toFixed(2) + 'vw,' + by.toFixed(2) + 'vh,0)';
+      });
+    }
 
     /* Halaman 3: roda gigi berputar */
     if (gear) gear.style.transform = 'rotate(' + (p * 720).toFixed(1) + 'deg)';
 
     /* Halaman 4: perahu berlayar ke kanan */
     if (boat) {
-      var tc = arr(4, 600, 5000, now);
+      var tc  = arr(4, 600, 5000, now);
       var bob = Math.sin(now / 400) * 0.8;
       boat.style.transform =
         'translate3d(' + (tc * tc * 115).toFixed(2) + 'vw,' + bob.toFixed(2) + 'vh,0)';
@@ -127,7 +110,11 @@
   /* ===== Input: 1 gerakan = 1 halaman ===== */
   addEventListener('wheel', function (e) {
     e.preventDefault();
+    var n = performance.now();
+    var gap = n - lastWheel;
+    lastWheel = n;
     if (locked || Math.abs(e.deltaY) < 8) return;
+    if (gap < 90) return;               // abaikan sisa inersia touchpad
     go(e.deltaY > 0 ? 1 : -1);
   }, { passive: false });
 
